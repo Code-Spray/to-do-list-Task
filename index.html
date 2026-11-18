@@ -14,9 +14,14 @@
 </head>
 
 <body>
-    <nav class="navbar md:navbar-expand">
+
+    <nav class="navbar md:navbar-expand bg-1">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
+            <button class="btn-icon navbar-toggler" type="button" data-bs-toggle="drawer" data-bs-target="#navbarDrawer"
+                aria-controls="navbarDrawer" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+            </button>
             <dialog class="drawer drawer-end" tabindex="-1" id="navbarDrawer" aria-labelledby="navbarDrawerLabel">
                 <div class="drawer-header">
                     <h5 class="drawer-title" id="navbarDrawerLabel">Menu</h5>
@@ -46,7 +51,7 @@
                         </li>
                     </ul>
                     <form class="hstack gap-2" role="search">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="anything" />
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
                         <button class="btn-solid btn-icon theme-secondary" type="submit">
                             <svg class="bi" width="16" height="16">
                                 <use href="#search" />
@@ -58,32 +63,23 @@
         </div>
     </nav>
 
-    <div class="container mt-12">
-        <div class="row">
-            <h1 class="text-center mb-6">ToDo List <i class="bi bi-fire"></i><i class="bi bi-fire"></i></h1>
-            <form class="d-flex gap-4" id="taskForm">
-                <label class="form-control form-adorn form-adorn-end ">
-                    <input type="text" class="form-ghost" placeholder="Task" id="taskInput" name="taskInput">
-                </label>
-                <button class="btn-solid theme-success" type="submit">Add</button>
-            </form>
-        </div>
-    </div>
+    <div class="container-fluid mt-6">
+        <div class="row px-5">
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="tasks d-flex flex-column gap-5">
+            <div class=" w-100 justify-content-center cards-container d-flex flex-wrap gap-5">
 
-                <!-- <div class="task border rounded d-flex justify-content-between align-items-center p-3">
-                    <p class="m-0">Some quick example text to build on the card title and make up the bulk of the
-                        card’s content.</p>
-                    <a href="#" class="btn-solid theme-danger">Delete</a>
-                </div> -->
-
+                <!-- <section class="card" style="max-width: 300px">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                            card’s content.</p>
+                    </div>
+                </section> -->
+                
             </div>
+
         </div>
     </div>
-
     <!-- Bootstrap scripts -->
     <script type="module" src="js/bootstrap.bundle.min.js"></script>
 

@@ -1,63 +1,38 @@
-if (localStorage.getItem("tasks") === null) {
-  localStorage.setItem("tasks", JSON.stringify([]))
-}
-
-const input = document.querySelector("#taskInput")
-const form = document.querySelector("#taskForm")
-const tasksContainer = document.querySelector(".tasks")
-const navbar = document.querySelector(".navbar")
-
-function renderTasks() {
-  const savedTasks = JSON.parse(localStorage.getItem("tasks"))
-
-  if (savedTasks.length <= 0) {
-    tasksContainer.innerHTML = `<h1 class="text-center">No Tasks For Now</h1>`
-    return
-  }
-
-  tasksContainer.innerHTML = ""
-  savedTasks.forEach((task, index) => {
-    tasksContainer.innerHTML += `
-      <div class="task border rounded d-flex justify-content-between align-items-center p-3">
-        <p class="m-0">${task}</p>
-        <button type="button" class="delete-btn btn-solid theme-danger">Delete</button>
-      </div>
+function renderPosts(posts) {
+  let content = ""
+  posts.forEach(post => {
+    content += `
+                <section class="card" style="max-width: 300px">
+                    <div class="card-body">
+                        <h4 class="card-title">${post.title}</h4>
+                        <p class="card-text">${post.body}}</p>
+                    </div>
+                </section>
     `
-  })
+  });
+  document.querySelector(".cards-container").innerHTML = content
 }
 
-tasksContainer.addEventListener("click", ev => {
-  const btn = ev.target
-  if (!btn.classList.contains("delete-btn")) {
+const xhr = new XMLHttpRequest();
+
+xhr.open("GET", "https://dummyjson.com/posts", true);
+xhr.setRequestHeader("Accept", "application/json");
+
+xhr.onreadystatechange = () => {
+  if (xhr.readyState !== 4) {
     return
   }
-  const content = btn.closest(".task").querySelector("p").textContent
-  let savedTasks = JSON.parse(localStorage.getItem("tasks"))
-
-  savedTasks = savedTasks.filter(task => task !== content)
-  localStorage.setItem("tasks", JSON.stringify(savedTasks))
-
-  renderTasks()
-})
-
-form.addEventListener("submit", (ev) => {
-  ev.preventDefault()
-
-  const value = input.value
-  if (!value) return
-
-  const savedTasks = JSON.parse(localStorage.getItem("tasks"))
-  savedTasks.push(value)
-  localStorage.setItem("tasks", JSON.stringify(savedTasks))
-
-  input.value = ""
-  renderTasks()
-})
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 50) {
-    navbar.setAttribute("class", "navbar md:navbar-expand bg-primary");
-  } else {
-    navbar.setAttribute("class", "navbar md:navbar-expand bg-1");
+  if (xhr.status < 200 || xhr.status >= 300) {
+    return
   }
-})
-renderTasks()
+  const data = JSON.parse(xhr.responseText);
+  let posts = data.posts
+  console.log(data);
+  renderPosts(posts)
+};
+
+xhr.onerror = function () {
+  console.error("Network Error");
+};
+
+xhr.send();
